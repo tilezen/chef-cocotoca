@@ -1,0 +1,10 @@
+#!/bin/bash
+
+exec 2>&1
+COCOTOCA_CONFIG=<%= node[:cocotoca][:cfg_path] %>/cocotoca.yaml \
+    exec chpst -u <%= node[:cocotoca][:user][:name] %> \
+    /usr/bin/gunicorn "cocotoca:app" \
+    --error-logfile - \
+    --access-logfile - \
+    --access-logformat '<%= node[:cocotoca][:gunicorn][:access_log_format] %>' \
+    -c <%= node[:cocotoca][:cfg_path] %>/gunicorn.cfg

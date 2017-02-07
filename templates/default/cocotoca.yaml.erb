@@ -1,0 +1,43 @@
+<%- if node[:cocotoca][:buffer] -%>
+buffer:
+<%- node[:cocotoca][:buffer].each do |fmt_ext, fmt_data| -%>
+  <%= fmt_ext %>:
+    <%- if fmt_data['layer'] -%>
+    layer:
+    <%- fmt_data['layer'].each do |layer_name, layer_data| -%>
+      <%= layer_name %>:
+        <%- layer_data.each do |geom_type, value| -%>
+        <%= geom_type %>: <%= value %>
+        <%- end -%>
+    <%- end -%>
+    <%- end -%>
+    <%- if fmt_data['geometry'] -%>
+    geometry:
+      <%- fmt_data['geometry'].each do |geom_type, value| -%>
+      <%= geom_type %>: <%= value %>
+      <%- end -%>
+    <%- end -%>
+<%- end -%>
+<%- end -%>
+<%- if node[:cocotoca][:store][:enabled] -%>
+store:
+  type: <%= node[:cocotoca][:store][:type] %>
+  name: <%= node[:cocotoca][:store][:name] %>
+<%- if node[:cocotoca][:store][:path] -%>
+  path: <%= node[:cocotoca][:store][:path] %>
+<%- end -%>
+<%- if node[:cocotoca][:store][:date_prefix] -%>
+  date-prefix: <%= node[:cocotoca][:store][:date_prefix] %>
+<%- end -%>
+<%- if node[:cocotoca][:store][:reduced_redundancy] %>
+  reduced_redundancy: <%= node[:cocotoca][:store][:reduced_redundancy] %>
+<%- end -%>
+<%- end -%>
+<%- if node[:cocotoca][:metatile][:enabled] -%>
+metatile:
+  size: <%= node[:cocotoca][:metatile][:size] %>
+<%- end -%>
+layer_names:
+<%- node[:cocotoca][:layer_names].each do |name| -%>
+  - <%= name %>
+<%- end -%>
